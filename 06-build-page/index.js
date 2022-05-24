@@ -52,6 +52,7 @@ async function copyDir(initName, newName) {
   const initDir = path.join(__dirname, initName);
 
   try {
+    await fs.rm(newDir, {recursive: true, force: true});
     await fs.mkdir(newDir, {recursive: true});
     const files = await fs.readdir(initDir);
     for (const file of files) {
@@ -72,7 +73,7 @@ const buildPage = async () => {
   try {
     await createHtml();
     await mergeStyles();
-    await copyDir('/assets', '/project-dist');
+    await copyDir('/assets', '/project-dist/assets');
   } catch (err) {
     console.log(err);
   }
